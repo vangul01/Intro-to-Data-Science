@@ -1,0 +1,678 @@
+MIDTERM REVIEW INTRO TO DATA SCIENCE
+
+To Study:
+
+Business BSD textbook 
+Lectures
+	3: 68
+	4: 57
+	5: 108
+	6: 69
+	7: 70
+practice midterm lecture 7
+Labs 
+**No RDD derivs/ EQ
+
+
+LECTURE 1-----------------------------------------------
+
+Data Science Process:
+Business understanding --> data understanding --> data prep --> modeling --> evaluation --> deployment
+
+Data Science Operations:
+collection --> cleaning --> storage --> retrieval --> learning --> visualization
+
+Tasks
+● Classification
+● Regression
+● Similarity matching
+● Clustering
+● Co-occurrence grouping
+● Profiling
+● Link prediction
+● Dimensionality reduction
+● Causal modeling
+
+Supervised learning = given labeled data, predict values for unlabeled/new data
+	-use classification and regression
+
+Unsupervised learning = discover patterns in data, group data into clusters/classes
+	-use clustering, dimension reduction and density estimation
+
+Reinforcement learning = learning through interaction, reward upon a certain action
+
+Classification with logistic regression
+	logistic regression = the log-odds of an event occuring
+
+Information theory = you get more info when something unlikely happens, less info from stuff you expected to happen
+	Entropy = expectation of distribution of info, measure of uncertainty of a random variable
+	Conditional Entropy = random variable given another rando var
+	Relative Entropy = measure of divergence bt 2 distributions
+
+Mutual Information = when 2 vars are independent, measure how close they are to being independent
+
+Information Gain = being more certain about a classification after splitting datas, do feature selection to increase info gain!
+
+Decision Trees = split on features (ugly? yes/no), each leaf is a prediction! 
+
+Regularization: 
+	Underfitting = high bias, low variance 
+	Overfitting = low bias, high variance
+	Regularized = low bias, low variance
+
+LECTURE 2-----------------------------------------------
+
+Supervised Learning = training and testing sets, purpose is to generalize to new data
+	Tasks = classification, regression
+
+Linear classification = ie. logistic regression and SVM
+Non-linear classification = ie. logistic reg and SVM
+Cost function = compare predicted value w actual value
+	average loss over all examples, optimization
+Loss Function = input actual values and predictions, output is measure of their difference
+
+Support Vector Machine
+	points separated by line, binary classification
+	separate by widest bar/margin from line
+	penalty for misclassification proportional to distance from boundary
+
+	(slide 36 good pic)
+
+	Margin classifier
+
+Logistic Regression Loss: looks like downward slope 
+Hinge Loss: downward line and then straight line \_
+
+Regression
+	Sum of Squares Error
+
+Overfitting: large gap between training error and test error
+	Solution 1: Data
+	Solution 2: Regularization
+
+	Avoid overfitting:
+	For trees --> continue splitting them, pruning, early stopping on min # of instances in leaf
+	For linear models --> add more variables, features
+
+	Learning curves: shows model performance on testing data plotted against amount of training data used. Usually performance increases with the amount of data
+
+	test accuracy as function of amount of training data for various models
+		- adding training data increases generalization accuracy until a limit, reducing generalization error as expected
+
+Bias & Variance:
+	bias = errors from approximating complicated model by a simpler model
+	variance = how different your predictions are with different training sets 
+
+	reduce bias --> train deeper and wider network
+	reduce variance --> add more data, regularization
+
+Regularization
+	Lasso
+	Ridge
+	Elastic
+
+Cross Validation:
+	1. randomly split data into k folds
+	2. iteratively take training data to be k-1 folds for building model thats tested on remaining fold
+	3. after testing each model, compute mean and variance of generalization error over all k models
+
+Ensemble of Models: taking argmax over the average of probabilities over the models for each class
+
+Optimization
+	Convex vs non-convex optimization
+	Extreme points: a function for which f(x)=0 has 1 of 3 extreme points (minimum U, maximum n, saddle point ~)
+
+	**Optimization algorithms:
+		**Gradient Descent: simple, fast, commonly used, local minimum for convex problems
+			Given starting point x
+			repeat
+				1. determine descent direction
+				2. choose step size a
+				3. update x
+			until stopping criteria is met
+
+		**Mini-Batch Gradient Descent: split data into n/k disjoint sets of k
+			-instead of process entire dataset, iteratively process each of the subsets	
+
+		**Stochastic Gradient Descent: 
+			-special case in which the mini-batch is of size 1 -using single random sample at a time 
+			-suitable as online method of handling data stream, single example at a time
+
+
+		Newton's Method: impractical for neural networks
+		Quasi-Newton methods: practical, less frequently used
+
+LECTURE 3-----------------------------------------------
+
+Conditional probability = the probability of something happening over the prob of something not happening?
+	P(A/B)
+
+Product Rule
+	P(A/B)*P(B) = P(B/A)*P(A)
+
+**Bayes Rule
+	P(A,B) = P(A/B)*P(B) = P(B/A)*P(A)
+****P(B/A) = P(A/B)*P(B) / P(A)
+
+	posterior ratio is likelihood ratio * prior ratio
+	P(B1/A)   P(A/B1)   P(B1) 
+	------- = ------- * -----
+	P(B2/A)   P(A/B2)   P(B2)
+
+	what is the probability that x occurs?
+
+	Sum Rule
+	p(A) = Sum P(A,B)
+
+SUPERVISED LEARNING: classification, regression, K-Nearest Neighbors
+
+K-Nearest Neighbors
+	-requires definition of distance function or similarity between samples
+	-select class based on majority vote of k closest points
+	-choice of k decides smoothness of classifier
+	-larger k results in higher bias
+	-smaller k results in higher variance
+
+Similarity and Distance
+
+	Euclidean = sqrt(x1-y1)^2 + (x2-y2)^2 + (xn-yn)^2
+	Manhattan = |(x1-y1)| + |(x2-y2)| + |(xn-yn)|
+	Jaccard = |X and Y|
+			  ---------
+			  |X or Y|
+
+	Cosine =   X . Y
+			-------------
+			||X|| ||Y||
+
+
+			AKA
+
+			     sum (xn * yn)
+		-------------------------------
+		sqrt(sum(xn^2)) sqrt(sum(yn^2))
+
+
+	Levenshtein Metric: minimum number of changes until word equals another word
+
+	K Nearest Neighbor = weighted by distance and similarity
+		  distance is means/distance from point, similarity is euclidean/cosine etc
+
+UNSUPERVISED LEARNING: clustering, K-Means, Hierarchical
+
+K-Means
+
+	FIRST CHOOSE K!!
+	1. get K random centroids
+	2. compute distances from centroids to points
+	3. group points closest to centroids
+	4. get mean of all points closest to centroids
+	5. adjust centroids
+	6. repeat 2-5 until centroids no longer updates
+
+Hierarchical Clustering
+
+	bottom up: each sample starts in its own cluster and pairs of clusters are merged
+
+		LIKE ROOTS BECOMING THE STEM OF A FLOWER
+
+	top down: all samples start in one cluster and splits are performed recursively
+
+		LIKE FLOWER STEM TURNING INTO ROOTS
+
+Clustering quality:
+	compare each instance of a thing in a group/among groups
+	GROUP	1 		2
+	DOGS 	4		1
+	CATS	3		2
+	SHARKS  3		7
+	TOTAL   10		10
+
+	For Dogs: 4/10 , 5/20, 1/10
+
+UNSUPERVISED LEARNING: Dimensionality Reduction, PCA
+
+PCA = maximize variance(spread of our data), minimize mean squared error
+
+Dimensionality Reduction: orthogonal linear transformation of data so that greatest variance is in first, then less is in 2nd, 3rd, etc and you can drop the ones that have very little variance
+
+************
+PCA:
+	1. compute covariance matrix  
+		Sum = 1/m Mt M
+	2. compute eigenvectors of covariance matrix by SVD
+
+	3. 
+
+To do PCA: Multiply your transposed matrix with matrix 
+
+t-SNE: map high dimensional points to 2D/3D points such that 
+	1. similar points map to nearby points
+	2. dissimilar points map to distant points
+
+	SO THIS IS PLOTTING IN 3D basically
+
+
+LECTURE 4-----------------------------------------------
+
+Evaluating performance and performance metrics:
+	accuracy (fraction of correct predictions) can be very misleading
+		#correct decisions/ total decisions
+
+	Binary classification and confusion matrices
+		True Positive, True Negative
+		False Positive (type 1 error), False Neg (type 2 error)
+
+	Cost-Benefit Matrix
+
+	Recall = how many positives you have out of total number of positives 
+		sensitivity, accuracy of your positives
+		high recall means you dont miss many positives
+		quantifies avoiding of false negatives
+
+		TruePositives / TotalPositives (aka TruePos + FalseNeg)
+
+		ie: rec[i] = (double)true_val/(double)ACTUAL_DOCS;
+
+	Precision = how many positives you have out of all guesses of positive
+		TruePos / TotalInstances (aka TruePos + FalsePos)
+		
+		ie: prec[i] = (double)true_val/(double)sum;
+
+	F1 Score = 2 * (prec*recall)/(prec+recall)
+
+	Specificity = true negative rates, accuracy on negative class
+		quantifies avoiding of false positives
+		Low specificity = lots of false positives that are actually negative
+		high specificity = few false alarms
+		TrueNeg / (TrueNeg + FalsePos)
+
+	**The goal is high precision and high recall!
+	**The goal is high sensitivity and high specificity!
+
+ROC Curve
+	best curve goes straight up and left
+	(0,0) = true negative
+	(1,1) = true positive
+	(0,1) = best
+	(1,0) = impossible
+	diagonal = random
+
+AUC = Area Under ROC Curve
+	perfect prediction = 1
+	random prediction = .5
+
+CRC = Cumulative response curve
+	hit rate = tp rate, % of positives correctly classified
+
+Lift
+
+Churn: whether someone will leave or not 
+
+LECTURE 5-----------------------------------------------
+
+Neural Networks
+	-input is xn, yellow is layer in center, linear combo of inputs to make z and non-linear function applied to z giving a. Combine a's to get y_hat
+	-y_hat counts as a layer too
+
+	Markov Chain
+	Markov property = each layer is dependent on the one prior
+
+	Forward Propagation: f(x) = f3(f2(f1(x)))
+		each x in next layer is a product of function of the prior layer
+
+		each function contains linear and non-linear part
+			linear component is *** matrix multiplication ***
+				giving weight to each coefficient
+			non-linear function acts component-wise on singular components
+
+		Composition of functions that are linear and non-linear
+			A3 = g3(W3g2(W2g1(W1A0)))
+
+	Back Propogation: neural networks uses chain rule in reverse, allows us to compute in 1 backwards pass the derivative of the loss in the weights
+
+		-backwards pass we compute the loss through the layers from weights
+		-we want to find weights to minimize the loss, we update the weights through all the layers
+		dy   dy du dv
+		-- = -- -- --
+		dx   du dv dx
+
+	Graphs:
+		Sigmoid
+		Hyperbolic Tangent
+		ReLU --> linear, looks like hinge _/  _-
+			 --> continuous to discontinuous function
+		leaky ReLU --> no straight line
+		Loss Functions
+
+	Gradient Descent
+		1. choose a starting point x
+		repeat
+			1. determine descent direction, biggest change of x
+			2. choose step size a
+			3. update x = x + a*descent direction
+		until stopping criteria is met
+
+Sequence Models
+	Text mining: NLP, bag of words, n-grams, markov model, feature vector
+
+	Limitations
+		Bag-of-words doesn't preserve order of info
+		Feature vector requires learning each word order
+		Markov Model doesnt model long term dependencies (2-grams)
+
+	Recurrent neural network: maintains word order and models long term dependencies, allows inputs and outputs of many lengths but its HARD TO TRAIN!
+		recurrent weight matrix raised to high power causes gradients to vanish or explode
+
+	TF = term frequency, how many times a word appears in a doc
+	wprdcount of x in doc/ total number of words in doc
+
+	IDF = inverse doc freq
+	total number of docs / how many documents word appears in
+
+	TFIDF = product of the 2, picks out words that are present in a doc but rare among the total number of docs
+
+	N-grams
+		bag-of-words = 1-gram
+		Markov model = 2-grams
+
+	RNN = recurrent neural network
+		1-to-many = image captioning
+		many-to-1 = sentiment classification
+		many to many = machine translation, video classification
+
+	Word Embedding = no relationship among words, replace word with lower dimensional feature vector for each word
+		applications = reading comprehension
+
+LECTURE 6-----------------------------------------------
+
+Stochastic Gradient Descent
+	Gradient Descent: problem is that total loss adds individual losses of every training sample and with respect to all the weights. There are many weights and examples
+
+	Solution: use a mini-batch of training data, random samples!
+		backpropogate: compute derivative with respect to all the weights in a single backward pass
+
+		mini-batch w 1 random sample, pass through training data, converge faster than gradient descent
+
+Mini-batch gradient descent
+	1. split data into n/k sets of size k
+	2. iteratively process each subset
+
+Feature selection
+Anomaly Detection
+	Gaussian Models may be wrong cause examples that fall within each gaussian feature independently may be an outlier
+		So use multivariate gaussian model!
+
+Random Forest
+	deep regression trees, random training data versions and average them 
+	learn trees on rando subsets of features as well as rando subsets of data
+
+	for a tree:
+		set number of variables to m, number of trees to T
+		for i = 0-->T
+			1. randomly sample n rows w replacement n times
+			2. grow max depth tree using the data features at random prior to splitting
+			3. save tree
+		compute the random forest fit at any prediction point as average of trees
+
+Boosting: shallow trees
+	Ada Boost: binary classification, fir classifiers to weighted training data, increase weight of misclassified examples
+	Gradient Boost: shallow tree (weak learner), shrink tree by learning rate and add to model, each tree fixes errors made by previous trees
+
+LECTURE 7-----------------------------------------------
+
+Feature engineering
+	one-hot encoding = categorical to numerical
+		A = [1,0,0] B = [0,1,0] C = [0,0,1]
+	binning = numerical to categorical
+		0-12 --> child  13-18 --> adult
+	normalization = convert to range [0,1] or [-1,1]
+	z-score normalization = convert to 0 mean and standard deviation 1
+
+PRACTICE MIDTERM-------------------------------------------
+
+
+E = sqrt sum(xn-yn)^2
+c = X.Y / ||X|| ||Y||
+J = |A and B| / |A or B|
+m = sum |xn-yn|
+l = minimum distance for a word to equal another
+
+majority vote classifier = classify something unknown based on what its closest neighbors are, used in KNN
+
+??similarity moderated classification and regression =  USE DISTANCE BETWEEN POINTS TO DETERMINE CLUSTER, weight is the recip of the square of the distance
+
+k-means pseudocode = 
+
+choose k
+choose k random clusters
+repeat
+	compute distance of each point to clusters
+	group together points to closest clusters
+	compute mean of all points in a cluster
+	this is the new cluster
+until convergence
+
+algo is guarenteed to converge, but not to the same clusters
+
+way to distinguish = PCA to add in depth
+					use k-folds to test each smaller set
+
+					CLUSTERING OR OUTLIER DETECTION
+-----------------------
+1. you could train your model in a way to have a high variance where model fits training data very well but doesnt fit testing well, overfitting your model 
+2. overfitting can be avoided by adding more data, using a simpler model, 
+3. k-fold is when you take k partitions with k-1 sets of training and 1 set to test, in the end you use every example for testing but k1 times for training
+??4. feature selection prevents overfitting by decreasing variance among data, less features less data as well. Forward stepwise algo is that ????
+
+REGULARIZATION AVOIDS OVERFITTING BY ADDING A PENALTY FOR COMPLEXITY
+
+??5. Lasso is when we incorporate L1 norm as penalty terms in least-squares regression
+
+6. lasso can be used as feature selection 
+
+
+FINAL REVIEW!!!
+
+-----------------Lecture 8: Data Visualization---------------------
+
+Colors:
+	-use less colors, use grey for ones you dont want to focus on, compliment/contrast, pair similar groupings with similar shades
+
+For  sentiment questions:
+	choose strong colors for decisions
+		more yes or no = stronger gradient in yes/no direction
+		yes or no = stronger color in both directions, lighter in indecision
+
+For pie charts:
+	-group stuff logically, like interest levels, activities
+	-dont add color where its not needed: title, labels, axes
+	-grey out the stuff thats unimportant/that you dont want to emphasize
+
+Clarity:
+	-take stuff away, no redundancy, limit color and eye travels, align stuff
+
+Persuasion:
+	-readjusting axes, intervals and stretching out graphs, looking at trends in pieces
+
+Concepts:
+	-parts of stuff, group alike things
+
+-----------------Lecture 9: Auto Data Science---------------------
+
+Hyperparameter Optimization:
+	look at estimation
+	automate right task and right dataset
+	may be costly
+
+
+	Grid Search: NAIIIVE
+		-regularly sample grid, test grid values
+		-take 2 random hyperparameters, look at ranges of lambda, ranges of c 
+		-do grid search to find value that when you plug in certain lambda and c you get the best params
+		*basically look at ranges, take random samples from between ranges
+		-ONLY CASE YOU COULD USE THIS IS IF YOU HAVE BOOLEAN INDEPENDENT PARAMS
+		-DONT DO THIS!!!
+			not all hyperparams are equal, maybe lambda is more important than c in certain cases
+	Random Search:
+		-randomly sample grid, test random values
+	Grid vs Random:	
+		-Random is better than grid
+			-importances are left where they are
+			-ALSO because there is always some dependence bt variables
+			-also bc in real life we dont only have boolean values
+
+	Adaptive Coarse to Fine Samplings
+		-efficient optimization, sample examples, sample features
+		-random samples, zoom in, random samples, zoom in 
+		-perform dense search in small region of relevant values
+			-goal is to find best hyperparams w minimum samples
+
+	Guided Search: good for n boolean params good/bad without interactions
+
+	Covariance Matrix Adaptation:
+		fit distribution to top K, keep moving top K and fitting
+		every iteration we sample points of distribution
+		then we move the distribution, sample from new points
+		do this until we get to minimum distribution
+
+		ALSO CALLED CROSS-ENTROPY PHASE
+		closeness of ditribution can be calculated w cross-entropy
+		gradient descent: moving point by point to min in orthogonal direction (zigzags) slow zigzag pattern
+									VS.
+		Covariance matrix adaptation, which has a grouping of points distribution that move to min
+
+	SURROGATE FUNCTIONS: find next defining point and then sample that point to get the next point
+	
+	Gaussian Processes: BALLOON ANIMAL!
+		(slide with black line and blue balloon animal)
+		-the black points are points we know, blue is confidence interval
+		-balloon animal pinch at the fattest part of the confidence interval and make the confidence int smaller
+		-take out air of balloon animal! good for finding lower confidence intervals
+
+	Bayesian Optimization:
+		● Build probabilistic model of objective
+		● Compute posterior distribution: Gaussian processes
+		● Optimize cheap surrogate function rather than expensive objective
+
+		green line! acquisition function = combo of samples and confidence interval in blue
+		take next sample based on highest of acquisition function (surrogate function)
+		
+
+		Find the spot where the green line(aquisition function) is the highest, this is the surrogate function, sample it and then your green line hits 0 cause you know whats up there. 
+
+		Bayesian Optimization Formula!
+
+		for n++ observations do 
+			1. find max of acquisition function (aka surrogate function)
+				this is your new determining point! (xn+1)
+			2. find matching determining point in objective function
+				this is where youre gonna pinch! (yn+1)
+			3. pinch data there (augment it)
+			4. update the model (looks like balloon pinch in objective function, and acquisition function is 0 at the old max now)
+				
+
+	Machine Learning Pipelines:
+
+		get algo and hyperparams that would minimize loss
+			choose estimator and hyperparams simultaneously
+
+		META DATA
+			data (tabular, image, audio)
+			tasks (classification(binary/non-binary), regression(multi-variable, uni-variable), time series forecasting)
+			solution
+
+		train on meta-data to learn how to learn
+			learn mapping from data task to solution
+			once you have enough of this you can build a model that can learn how to learn
+
+		Preprocessing: prepares data to be processed
+			handling nulls, normalizing data, one hot encoding for categorical data, 
+		Feature Extraction: creates brand new features (pca, svd)
+		Feature Selection: keeps a subset of the original features 
+		Estimation: 
+		Post-processing: 
+
+-----------------Lecture 10: Bayesian Inference ---------------------
+
+Bayes Rule:
+	point and probability distributions
+	Prob(a,b) = P(a/b)P(b) = P(b/a)P(a)
+	P(b/a) = P(a/b)P(b)/P(a)
+
+	prior distribution = expert knowledge, what is expected (ie: 5 heads out of 10 coin flips)
+	likelihood = what happens in reality/observed behavior (ie: 4 heads out of 10 coin flips)
+	posterior distribution = posterior is proportional to prior times likelihood, updated belief based on experimental results/new evidence/likelihood
+		posterior ratio is likelihood ratio * prior ratio
+
+	You can estimate the posterior distribution of a parameter by...
+	1. MAP Estimation
+		● From distribution to single parameter value
+		● Choose value which is most probable given observed data and prior belief
+
+		It equals the mode of the posterior distribution
+	2. Markov Chain Monte Carlo (MCMC)
+		**Goal: estimate posterior distribution of parameter θ, which is probability that coin flip results in heads.
+		● Prior distribution is uninformative Beta distribution with parameters (1,1).
+		● Use binomial likelihood function to quantify data: 4 heads / 10 coin flips.
+		-Use MCMC with M-H algorithm to generate sample from posterior distribution of θ. Use sample to estimate mean and confidence intervals of posterior distribution
+			• Use sample to estimate mean or median of posterior distribution, 95% credible interval, probability that θ falls within arbitrary interval
+
+	Variational Bayes
+		KL Divergence
+
+-----------------Lecture 11: Bias ---------------------
+*** GANs not included
+
+Word Embedding = learn word embedding from large unsupervised corpus
+
+Word Embedding bias = biases in corpus are captured in algorithm
+	ex man, woman --> programmer, teacher
+
+Fairness:
+	-bank loans, advertising, college admissions
+
+	individual fairness = treat similar individuals similarly
+	group fairness
+		demographic parity, demographics of people receiving certain outcome is in line with demographics of entire population
+
+	LOANS
+		score - loan is determined by score
+		probability - the higher the score, the greater the probability of being paid back
+			if your score is over the threshold you'll get a loan
+		utility - you get a return on giving a loan
+		change in score - credit score is updated for if the bank is paid back or not
+
+		Maximizing profit is a messed up way because then you set different thresholds for different groups
+
+		group unaware, you dont balance it per grouping so some groups would get less loans cause of their distribution
+
+		Demographic parity = each group gets same fraction of loans, the positives rates are the same
+		Problem: only looks at loans granted and not at loans paid back
+
+		equal opportunity = of those who would pay back a loan, the same fraction in each group is actually granted a loan, same true positive rate for both groups
+
+		false pos  =  false pos / (false pos + true neg)
+		false neg  =  false neg / (false neg + true pos)
+		pos pred   =  true pos / (true pos + false pos)
+
+		● No classifier can ensure all 3 criteria together unless equal base rates
+
+
+
+Demographic parity
+Average absolute difference on each sensitive group
+Equal opportunity
+Average absolute difference on each sensitive group-label combination
+
+-----------------Lecture 12: recommendations ---------------------
+
+content-based recommendation = naive, based on a description of the item and a profile of the user’s preferences. These methods are best suited to situations where there is known data on an item (name, location, description, etc.), but not on the user. Content-based recommenders treat recommendation as a user-specific classification problem and learn a classifier for the user's likes and dislikes based on product features. 
+Ex: recommending you something based on the past things you’ve liked
+collaborative filtering = a method of making automatic predictions about the interests of a user by collecting preferences or taste information from many users.
+Ex: recommending you something based on what stuff similar users to you like or use
+
+
+
+
+
