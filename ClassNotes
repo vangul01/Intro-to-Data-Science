@@ -1,0 +1,506 @@
+1/30/2019
+Intro to Data Science
+
+Office Hours
+
+Intro to Data Science:   
+Friday 10-11 w prof
+Andrea ayw255@nyu.edu
+office hours 11-12 CDS 665 Wednesdays
+
+First HW Feb 11
+
+can use Google Colaboratory
+1 GPU or 1 TPU for free
+
+Will use Google Dataset Search for term project
+
+data split
+test set is used for training set
+
+-------------------------------------------------------
+2/6/2019
+Intro to Data Science
+
+Supervised Learning = we are given a dataset, each example has features, maps to a class
+	keep training and testing disjointed, otherwise an overfit, may minimize as well
+
+	def intersection(a, b):
+    	return not set(a).isdisjoint(b)
+
+Goal is use training set to predict on test set values with small error
+
+Based on data build our model and find params based on model
+OR
+use data constraints of model we chose to find the params
+
+
+cost function
+minimize loss between example and prediction
+
+loss function
+
+logistic regression: start w probability of x, estimate probability. we want to define the odds of an event happening. 
+	Sigmoid has values between 0-1
+	estimate of probability p(x)
+	log loss = 
+
+Support Vector Machine
+	penalty for if somethings on the wrong size past the margin, penalty is proportional to distance from margin, which is proportional to our loss
+
+Optimal Margin Classifier
+	
+
+Regularization: just get it right, no over/under fit
+	goal is low bias, low variance
+
+Learning curves continually improve with more data while the other curves flatten out
+
+train model (decision tree, logistic regression, neural network) on training data, when you arrive at an error then add stuff to improve the model until you're happy with the training and the test
+
+Stochastic Gradient Descent practical for training very large models with very large data sets, very popular and useful!
+
+-------------------------------------------------------
+2/13/2019
+Intro to Data Science
+
+Bayes Rule
+probability of an event occurring is blue within white
+you can also see probability of A conditioned onto probability of B
+
+Update belief base on experiment results
+PRIOR = red is probability distribution - your prior belief
+LIKELIHOOD = blue is likelihood function, gotten from data and experiment results - happens in reality 
+
+POSTERIOR = Updated is proportional to prior*likelihood = posterior, or black line
+as you observe more data, prior matches less and less to posterior
+
+K-Nearest Neighbors
+
+K-Means Clustering
+compute means of centroids, move updated centroids, keep doing this and you keep updating the centroids
+repeat until convergence 
+	Problem: not guaranteed convergence. Pick random K and choose many random points for first position closest to centroids
+
+
+-------------------------------------------------------
+2/20/2019
+Intro to Data Science
+
+Most used metric in Kaggle Competitions
+	accuracy - won't work if distribution is skewed (1000 instances w 990 positive, 10 negative), you'll get high accuracy and all predictions will be positive but its misleading
+
+Binary Classification
+	True positive = accurately predicted as true
+	True negative = accurately predicted as false
+	False positive = incorrectly predicted as true 
+		type 1 error
+	False negative = incorrectly predicted as false
+		type 2 error
+
+Evaluation Metrics
+
+ROC Curve
+	(0,0) = never predict positive
+	(1,1) = always predict positive
+	(0,1) = the BEST! Perfect predictions for pos and neg
+	diagonal = random classifier, same prob of true and false
+	above diagonal = better than random
+	below diagonal = worse than random, not possible!
+
+	Best to be top left!
+	Lower left is being conservative with predictions
+	top right is being very permission, allowing to make a lot of classifications
+		whenever its negative you move right, positive you move up
+
+	With curves that crisscross and its hard to see which is more to the top left, find the areas under the curve and 
+	take whichever one is greater
+
+Churn Example
+	
+Collaborative Filtering Solution
+	if you don't know what something is, set it to random.
+	given xs we can learn thetas and given thetas we can learn xs. We can alternate and then converge to learn the solution! Product of feature matrix and parameter matrix.
+
+
+-------------------------------------------------------
+2/27/2019
+Intro to Data Science
+
+Neural Networks
+	composition of functions
+
+Perceptron = wnxn's passed through layer
+	input is xn, yellow is layer in center, linear combo of inputs to make z and non-linear function applied to z giving a. Combine a's to get y_hat
+	y_hat counts as a layer too
+	each activation in layer is connected to all activations of previous layer
+
+	Markov property = each layer is dependent on the one prior
+
+	we can flatten a picture and have input be a vector of many input nodes
+
+	Stack many examples that you pass through the network - matrices
+
+	each function contains linear and non-linear part
+		linear component is matrix multiplication
+			giving weight to each coefficient
+		non-linear function acts component-wise on singular components
+
+	Composition of functions that are linear and non-linear
+		A3 = g3(W3g2(W2g1(W1A0)))
+
+	....ReLU.... continuous to discontinuous function
+
+
+	neural networks uses chain rule in reverse, allows us to compute in 1 backwards pass the derivative of the loss in the weights
+
+
+	pass each example through the layers, pass through function with 2 components (linear w matrix multiplication, non-linear part) and after forward pass, we do backwards pass
+	backwards pass we compute the loss through the layers from weights
+
+	we want to find weights to minimize the loss, we update the weights through all the layers
+
+	compute derivative of loss from weights of last layer through forward propagation and continually update the loss. backward pass is only 1 pass.
+
+	linear parts can be any of the graphs in activation functions
+	ReLU can be used for efficiency purposes
+
+	in foreward we use nonlin and backwards we use the derivatives of the nonlins
+
+	single backwards pass through wn's matrices derivative of loss in respect to all of the weights
+
+Gradient Descent
+	on top of hill and you choose the steepest way to go down, your steps are proportional to the gradient, keep doing that over and over
+
+Sequence Models
+	
+	term freq
+		term = word
+		freq = number of times word shows up
+
+	N-grams
+		groups words in a list with n words per group
+
+	Word Embedding
+		
+
+-------------------------------------------------------
+3/6/2019
+Intro to Data Science
+
+Hinge Loss --> SVM
+Cross-entropy Loss --> Logistic regression
+
+x = weights
+a = examples
+y = ground truth lables
+y_hat = predictions
+
+Mini-batch
+	
+Have alpha slowly reduced...
+
+Compute total loss with respect to many weights
+
+Random Forests = estimators
+	average over many trees
+	we're splitting on a random subset of the features
+
+	random based on columns and rows of our data
+
+Next Week:
+	going over all 6 lectures, doing midterm review, practice midterm
+
+
+-------------------------------------------------------
+3/13/2019
+Intro to Data Science
+
+Underfitting and Overfitting:
+
+To make model more fitted from underfitting
+	add more features and make model more complex so that it can learn better
+
+To make model more fitted from overfitting
+	notice when accuracy starts going down on a different validation set
+
+Stacking: combine models to prove accuracy
+
+Practice Questions--------
+1. we would split on any variables that arent balance or age, even residence though its already used on left
+
+2. With complex models think of bias and over/underfitting! more complex models should be used when we have more data, otherwise it might over/underfit data. When theres less data use a simple model.
+
+3. To optimize for really really large samples is batch of size 1, mini batch of size 1 (stochastic gradient descent)
+
+Practice Midterm----------
+
+** Go over definitions **
+1a) ROC lets us determine how close to true the predictions of a model are, you look at the area under the curve to determine how good the model is, more accurate than measuring accuracy. 
+(0,0) = always false
+(0,1) = best model
+(1,1) = always true
+(1,0) = not possible
+45 degrees = random
+??1b)
+int apex = (model true positive/true negative)
+draw curve from (0,0) to (1,0) with apex as apex
+??1c) AUC is accuracy measurer, its values range from 0-1 and is used to compare models
+1d) When you have skewed data set, accuracy would mess up your model. if you have a classifier that says 99% yes for a dataset 99 yes out of 100 then your model will be inaccurate. 
+1e) 
+1f) learning curve is the accuracy of a machine
+
+2a) Levenshtein = the number of replacements needed for 2 strings to match
+
+2b) MVC = look at neighbors take majority distance between labels
+2c) 
+
+3a) avoid overfitting
+	people can overfit publicly by improve submission according to model. The fact that we can submit multiple times means we can overfit. You could overfit the test data by doing that a lot. 
+
+3d) (forward stepwise algorithm?) bootstrap = instead of just doing k folds get new samples and train on new training data
+
+3e) why does regularization reduce bias/model complexity? 
+If our non-linear part is close to linear, we've made it simpler and reduced the bias 
+
+4) Lecture on textmining, part about the derivatives is out of scope
+	(vanishing and exploding gradients, RNNs are above scope). Understand different classes of models cause 
+4a) bag of words = most common words in a document through counting number of words, there could be bias though when youre filtering your words
+4b) n-grams = combining n terms together and seeing how common they are, include them if theyre commonly grouped. Limitations are which n is best?
+4c) bi-gram and MM =  bi-gram is a 2 word ngram and MM is a 2 word n-gram. They are the same. 
+4d) TF-IDF is 
+
+
+Midterm setup:
+5 problems with multiple sections, choose 4 out of 5
+each question is 25 points
+	remembering and also solving problems
+	topic for each questions
+	clustering, model performance
+	100 minutes
+
+
+-------------------------------------------------------
+4/10/2019
+Lecture 9
+
+Hyperparam Optimization
+	look at estimation
+	automate right task and right dataset
+	may be costly
+
+	Grid Search - naiiive 
+		take 2 random hyperparameters, look at ranges of lambda, ranges of c 
+		do grid search to find value that when you plug in certain lambda and c you get the best params
+		*basically look at ranges, take random samples from between ranges
+		ONLY CASE YOU COULD USE THIS IS IF YOU HAVE BOOLEAN INDEPENDENT PARAMS
+		DONT DO THIS!!!
+			not all hyperparams are equal, maybe lambda is more important than c in certain cases
+	
+	Random is better than grid, importances are left where they are
+		ALSO because there is always some dependence bt variables
+		and also bc in real life we dont only have boolean values
+
+	Adaptive Coarse to Fine Samplings
+		random samples, zoom in, random samples, zoom in 
+		goal is to find best hyperparams w minimum samples
+
+	Covariance Matrix Adaptation
+		fit distribution to top K, keep moving top K and fitting
+		every iteration we sample points of distribution
+		then we move the distribution, sample from new points
+		do this until we get to minimum distribution
+
+		ALSO CALLED CROSS-ENTROPY PHASE
+		closeness of ditribution can be calculated w cross-entropy
+		gradient descent: moving point by point to min in orthogonal direction (zigzags) slow zigzag pattern
+									VS.
+		Covariance matrix adaptation, which has a grouping of points distribution that move to min
+
+	SURROGATE FUNCTIONS: find next defining point and then sample that point to get the next point
+	Gaussian Processes
+		(slide with black line and blue balloon animal)
+		the black points are points we know, blue is confidence interval
+		balloon animal pinch at the fattest part of the confidence interval and make the confidence int smaller
+		take out air of balloon animal! good for finding lower confidence intervals
+
+	Bayesian Optimization
+		green line! acquisition function = combo of samples and confidence interval in blue
+		take next sample based on highest of acquisition function (surrogate function)
+		
+
+	get algo and hyperparams that would minimize loss
+		choose estimator and hyperparams simultaneously
+
+	META DATA
+		data (tabular, image, audio)
+		tasks (classification(binary/non-binary), regression(multi-variable, uni-variable), time series forecasting)
+		solution
+
+	train on meta-data to learn how to learn
+		learn mapping from data task to solution
+		once you have enough of this you can build a model that can learn how to learn
+
+HOMEWORK
+STEP 1
+
+Download dataset
+download code
+see that code runs on data set, gives performance metric, training test time thats expected
+performance1.csv, performance2.csv
+each csv contains id of competition, time performance metric and time, and headers of OG dataset (header1.csv)
+
+STEP 2
+understand how solutions generalize from 1 competition to the next
+look at each solution and decompose into 5 parts
+preprocessing
+feature extraction
+feature selection
+estimation
+post processing
+
+pipeline.py
+	5 functions
+		def preprocessing
+			if (pick 2 from the 8 )
+				data augmentation - increase the amount of training data
+			if (1 from 8)
+				augment w auxilary dataset from:
+					google dataset search
+					openML
+				that will improve the result
+				modify preprocessing pipeline function to read aux data set too
+				
+		def feature extraction
+		def feature selection
+		def estimation
+		def postprocessing
+
+	as input, row header, read header, parse and create and run functions on data
+
+
+
+image data - tensorflow, keras
+tabular - sklearn, 
+use google collab (like jupyter notebooks but on cloud)
+
+
+-------------------------------------------------------
+4/24/2019
+Intro to DS
+
+FOR HOMEWORK:::: HIGHLIGHT POINTS
+
+look at 
+	-> selectorfunction col, right selector function and parameter
+		can solve all tabulars with 3-5 selectors
+	-> estimator function call, function call with parameters
+		-> put line of code that calls estimator along w parameters
+	-> columns
+
+
+	takes selector 
+		reads in columns, applys selector, applys estimator
+
+	hard part is preprocess and estimator involved dropping cols and transforming
+
+	look at code, find one thats calling selector and estimator 
+	place 2 lines of code in metadata
+	turns columns in cells into function calls
+
+
+	instead of under netid/name
+	put under netid/
+
+
+*** FILL IN THESE important columns!!!! ***
+	AL featureSelector function call 
+		SelectKBest(f_classif, k=10)
+		ExtraTreesClassifier()
+
+	AU estimator1 function call
+		randomforest with params (n=1000, )
+		logisticRegression(C=10.0)
+	BB performanceMetric
+	W Columns 
+
+
+merge directories	
+
+dropping columns manually is preprocessing
+preprocessing and estimator is putting code that you found
+
+
+
+
+BIAS AND FAIRNESS
+Material on the GAM is not on the final
+UP UNTIL UNIVERSITY ADMISSIONS:MODEL will be on final
+
+
+
+
+BIKES:
+[0; datetime;real;1;season;categorical;2;holiday;categorical;3;workingday;categorical;4;weather;categorical;5;temp;real;6;atemp;real;7;humidity;integer;8;windspeed;real;8;casual;integer;9;registered;integer;0;count;integer]
+
+datetime,season,holiday,workingday,weather,temp,atemp,humidity,windspeed,casual,registered,count
+
+[0;datetime;datetime;1;season;categorical;2;holiday;categorical;3;workingday;categorical;4;weather;categorical;5;temp;numeric;6;atemp;numeric;7;humidity;numeric;8;windspeed;numeric;9;casual;unwanted;10;registered;unwanted;11;count;numeric]
+
+
+preprocessing function call
+
+
+
+
+
+
+[
+0; id;integer;
+1; VAR_0001;categorical;
+2; VAR_0032;integer;
+3; VAR_1934;categorical;
+4; target;integer
+]
+
+
+
+blacklist = [8, 9, 10, 11, 12, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 38, 39, 40, 41, 42, 43, 44, 58, 59, 60, 61, 62, 63, 66, 67, 68, 69, 70, 71, 72, 73, 75, 76, 77, 78, 79, 80, 83, 84, 114, 156, 157, 158, 159, 166, 167, 168, 169, 176, 177, 178, 179, 188, 189, 190, 191, 196, 202, 204, 207, 213, 214, 216, 217, 222, 225, 228, 229, 231, 235, 238, 239, 244, 266, 283, 305, 404, 427, 428, 454, 466, 467, 493, 840]
+
+
+feature selector = selectkbest
+feature selector call = SelectKBest(chi2 k=200)
+
+estimators = GBR/GBC
+estimator1 = GBR/GBC
+estimator 1 function call = GradientBoostingClassifier(random_state=1 n_estimators=25 max_depth=3)
+
+metric = auc
+
+
+
+
+
+XGboost	
+estimators = decisiontreeclassifier/regressor	
+estimator1 = decisiontreeclassifier/regressor	
+
+estimator1 function call = XGBClassifier(max_depth=7 min_child_weight=360)
+
+accuracy	0.66652		
+preprocessing = nan processing
+preprocessing function call = X.fillna(-1000 inplace=True)
+
+row8.csv
+
+GBR/GBC,GBR/GBC,GradientBoostingClassifier(random_state=1 n_estimators=25 max_depth=3)
+
+randomforestclassifier/regressor,randomforestclassifier/regressor,RandomForestRegressor(n_estimators=500 n_jobs=-1 max_features='auto')
+
+
+#11:42 -->  
+#11:08 --> 
+
+0;VAR_0006;integer;0;VAR_0007;integer;0;VAR_0008;unwanted;0;VAR_0009;unwanted;0;VAR_0010;unwanted;0;VAR_0011;unwanted;0;VAR_0012;unwanted;0;VAR_0013;integer;0;VAR_0014;integer;0;VAR_0015;integer;
+
+
